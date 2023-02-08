@@ -8,12 +8,12 @@ const myFormat = printf(({ level, message, label, timestamp }) => {
 });
 
 const fileRotateTransport = new winston.transports.DailyRotateFile({
-  filename: 'combined-%DATE%.log',
+  filename: './logs/combined-%DATE%.log',
   datePattern: 'YYYY-MM-DD',
   maxFiles: '14d',
 });
 
-const medfinLogger = () => {
+const developmentLogger = () => {
   return winston.createLogger({
     level: 'http',
     format: combine(
@@ -27,20 +27,20 @@ const medfinLogger = () => {
     transports: [
       new winston.transports.Console(),
       new winston.transports.File({
-        filename: './logger/development.log',
+        filename: './logs/development.log',
       }),
       new winston.transports.File({
-        filename: './logger/app-error.log',
+        filename: './logs/app-error.log',
         level: 'error',
       }),
     ],
     exceptionHandlers: [
-      new winston.transports.File({ filename: 'exception.log' }),
+      new winston.transports.File({ filename: './logs/exception.log' }),
     ],
     rejectionHandlers: [
-      new winston.transports.File({ filename: 'rejections.log' }),
+      new winston.transports.File({ filename: './logs/rejections.log' }),
     ],
   });
 };
 
-module.exports = medfinLogger;
+module.exports = developmentLogger;

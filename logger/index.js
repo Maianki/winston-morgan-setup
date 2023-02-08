@@ -1,10 +1,12 @@
-const medfinLogger = require('./medfinLogger');
-const productionLogger = require('./productionLogger.js');
+const developmentLogger = require('./developmentLogger');
+const productionLogger = require('./productionLogger');
 
 let logger = null;
 
-if (process.env.NODE_ENV !== 'dev') {
-  logger = medfinLogger();
+if (process.env.NODE_ENV.trim() === 'dev') {
+  logger = developmentLogger();
+} else {
+  logger = productionLogger();
 }
 
 module.exports = logger;
